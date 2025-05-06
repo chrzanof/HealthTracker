@@ -1,27 +1,36 @@
 ﻿#include "raylib.h"
 
-int main(void)
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
+
+int main()
 {
-    
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    InitWindow(400, 200, "raygui - controls test suite");
+    SetTargetFPS(60);
 
-    InitWindow(screenWidth, screenHeight, "Health Tracker");
+    bool showMessageBox = false;
 
-    SetTargetFPS(60);              
-
-    while (!WindowShouldClose())   
+    while (!WindowShouldClose())
     {
         BeginDrawing();
+        ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
 
-        ClearBackground(DARKGRAY);
+        Rectangle buttonBounds = { 24, 24, 120, 30 };
+        if (GuiButton(buttonBounds, "#191#Show Message")) showMessageBox = true;
 
-        DrawText("Hello, Window!", 320, 200, 20, RAYWHITE);
+        
+
+        if (showMessageBox)
+        {
+            Rectangle msgBoxBounds = { 85, 70, 250, 100 };
+            int result = GuiMessageBox(Rectangle{ 85, 70, 250, 100 }, "#191#Message Box", "Hi! This is a message!", "Nice;Cool");
+
+            if (result >= 0) showMessageBox = false;
+        }
 
         EndDrawing();
     }
 
     CloseWindow();
-
     return 0;
 }
