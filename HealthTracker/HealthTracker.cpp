@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <fstream>
 #include "raylib.h"
 
 #define RAYGUI_IMPLEMENTATION
@@ -7,14 +8,9 @@
 
 int main()
 {
-    nlohmann::json profile1 = nlohmann::json::parse(R"(
-  {
-    "profile": "Filip",
-    "gender": "male",
-	"height": 180.0,
-	"age": 25
-  }
-)");
+    std::ifstream jsonFile = std::ifstream("profiles/profile1.json");
+    nlohmann::json profile1 = nlohmann::json::parse(jsonFile);
+    jsonFile.close();
     std::string profileName = profile1["profile"];
     std::string gender = profile1["gender"];
     float height = profile1["height"];
@@ -23,6 +19,8 @@ int main()
     std::cout << "gender: " << gender << std::endl;
     std::cout << "height: " << height << std::endl;
     std::cout << "age: " << age << std::endl;
+
+
     
     InitWindow(400, 200, "raygui - controls test suite");
     SetTargetFPS(60);
