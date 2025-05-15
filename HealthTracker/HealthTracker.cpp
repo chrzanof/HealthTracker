@@ -1,10 +1,29 @@
-﻿#include "raylib.h"
+﻿#include <iostream>
+#include "raylib.h"
 
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
+#include "json.hpp"
 
 int main()
 {
+    nlohmann::json profile1 = nlohmann::json::parse(R"(
+  {
+    "profile": "Filip",
+    "gender": "male",
+	"height": 180.0,
+	"age": 25
+  }
+)");
+    std::string profileName = profile1["profile"];
+    std::string gender = profile1["gender"];
+    float height = profile1["height"];
+    int age = profile1["age"];
+    std::cout << "profile: " << profileName << std::endl;
+    std::cout << "gender: " << gender << std::endl;
+    std::cout << "height: " << height << std::endl;
+    std::cout << "age: " << age << std::endl;
+    
     InitWindow(400, 200, "raygui - controls test suite");
     SetTargetFPS(60);
 
